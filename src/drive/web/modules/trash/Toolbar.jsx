@@ -32,8 +32,8 @@ const Toolbar = ({
   const { BarRight } = cozy.bar
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
-  const openMenu = useCallback(() => setMenuVisible(true))
-  const closeMenu = useCallback(() => setMenuVisible(false))
+  const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
+  const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
 
   const MoreMenu = (
     <div>

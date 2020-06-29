@@ -24,11 +24,13 @@ const FileOpener = ({
   const fileUrl = generateFileUrl({ client, isFlatDomain, file })
   const shouldOpenInANewTab = file.class === 'shortcut' && !isMobileApp()
 
+  const current = linkRef.current
+
   useEffect(
     () => {
       let gesturesHandler = null
-      if (linkRef.current !== null) {
-        gesturesHandler = new Hammer.Manager(linkRef.current)
+      if (current !== null) {
+        gesturesHandler = new Hammer.Manager(current)
         gesturesHandler.add(new Hammer.Tap({ event: 'singletap' }))
         gesturesHandler.add(new Hammer.Press({ event: 'onpress' }))
         gesturesHandler.on('onpress singletap', ev => {
@@ -49,7 +51,16 @@ const FileOpener = ({
       }
       return () => gesturesHandler && gesturesHandler.destroy()
     },
-    [linkRef.current]
+    [
+      current,
+      actionMenuVisible,
+      disabled,
+      file,
+      open,
+      selectionModeActive,
+      shouldOpenInANewTab,
+      toggle
+    ]
   )
 
   if (shouldOpenInANewTab && isActive) {

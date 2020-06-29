@@ -18,7 +18,10 @@ const MakeAvailableOfflineMenuItem = connect(
   })
 )(({ checked, toggleOfflineAvailability, children, ...rest }) => {
   const client = useClient()
-  const onToggle = useCallback(() => toggleOfflineAvailability(client))
+  const onToggle = useCallback(() => toggleOfflineAvailability(client), [
+    client,
+    toggleOfflineAvailability
+  ])
   return (
     <MenuItem {...rest}>
       {children}
