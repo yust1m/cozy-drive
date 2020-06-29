@@ -84,13 +84,19 @@ const DriveView = ({ currentFolderId, router, location, children }) => {
     foldersResult.fetchStatus === 'pending' ||
     filesResult.fetchStatus === 'pending'
 
-  const navigateToFolder = useCallback(folderId => {
-    router.push(`/folder/${folderId}`)
-  })
+  const navigateToFolder = useCallback(
+    folderId => {
+      router.push(`/folder/${folderId}`)
+    },
+    [router]
+  )
 
-  const navigateToFile = useCallback(file => {
-    router.push(`/folder/${currentFolderId}/file/${file.id}`)
-  })
+  const navigateToFile = useCallback(
+    file => {
+      router.push(`/folder/${currentFolderId}/file/${file.id}`)
+    },
+    [router, currentFolderId]
+  )
 
   const { hasWriteAccess } = useContext(SharingContext)
   const client = useClient()
