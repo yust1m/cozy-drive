@@ -71,7 +71,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
-    "@sentry/cli": "1.44.2",
+    "@sentry/cli": "1.54.0",
     "@testing-library/react": "^10.0.1",
     "@testing-library/react-hooks": "^3.3.0",
     "babel-core": "7.0.0-bridge.0",
