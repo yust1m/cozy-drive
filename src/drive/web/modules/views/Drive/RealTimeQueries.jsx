@@ -23,37 +23,40 @@ const dispatchChange = (
 const RealTimeQueries = ({ doctype }) => {
   const client = useClient()
 
-  useEffect(() => {
-    const realtime = client.plugins.realtime
+  useEffect(
+    () => {
+      const realtime = client.plugins.realtime
 
-    const dispatchCreate = document => {
-      dispatchChange(document, Mutations.createDocument, client, doctype)
-    }
-    const dispatchUpdate = document => {
-      dispatchChange(document, Mutations.updateDocument, client, doctype)
-    }
-    const dispatchDelete = document => {
-      dispatchChange(
-        { ...document, _deleted: true },
-        Mutations.deleteDocument,
-        client,
-        doctype
-      )
-    }
+      const dispatchCreate = document => {
+        dispatchChange(document, Mutations.createDocument, client, doctype)
+      }
+      const dispatchUpdate = document => {
+        dispatchChange(document, Mutations.updateDocument, client, doctype)
+      }
+      const dispatchDelete = document => {
+        dispatchChange(
+          { ...document, _deleted: true },
+          Mutations.deleteDocument,
+          client,
+          doctype
+        )
+      }
 
-    const subscribe = async () => {
-      await realtime.subscribe('created', doctype, dispatchCreate)
-      await realtime.subscribe('updated', doctype, dispatchUpdate)
-      await realtime.subscribe('deleted', doctype, dispatchDelete)
-    }
-    subscribe()
+      const subscribe = async () => {
+        await realtime.subscribe('created', doctype, dispatchCreate)
+        await realtime.subscribe('updated', doctype, dispatchUpdate)
+        await realtime.subscribe('deleted', doctype, dispatchDelete)
+      }
+      subscribe()
 
-    return () => {
-      realtime.unsubscribe('created', doctype, dispatchCreate)
-      realtime.unsubscribe('updated', doctype, dispatchUpdate)
-      realtime.unsubscribe('deleted', doctype, dispatchDelete)
-    }
-  }, [client, doctype])
+      return () => {
+        realtime.unsubscribe('created', doctype, dispatchCreate)
+        realtime.unsubscribe('updated', doctype, dispatchUpdate)
+        realtime.unsubscribe('deleted', doctype, dispatchDelete)
+      }
+    },
+    [client, doctype]
+  )
 
   return null
 }
